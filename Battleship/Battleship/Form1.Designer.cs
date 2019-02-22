@@ -45,6 +45,7 @@
             // lblGrid
             // 
             this.lblGrid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblGrid.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGrid.Location = new System.Drawing.Point(57, 41);
             this.lblGrid.Name = "lblGrid";
             this.lblGrid.Size = new System.Drawing.Size(247, 257);
@@ -169,7 +170,7 @@
             this.Controls.Add(this.lblGrid);
             this.Name = "Form1";
             this.Opacity = 0.9D;
-            this.Text = "Form1";
+            this.Text = "Battleship";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
