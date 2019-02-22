@@ -103,9 +103,19 @@ namespace Battleship
             {
                 if (xdif == 3 && accu == 1)
                 {
-                    for(int i = x1; i <= x2; i++)
+                    if (x1 <= x2)
                     {
-                        grid[i, y1] = 1;
+                        for (int i = x1; i <= x2; i++)
+                        {
+                            grid[i, y1] = 1;
+                        }
+                    }
+                    else if(x1 >= x2)
+                    {
+                        for (int i = x1; i >= x2; i--)
+                        {
+                            grid[i, y1] = 1;
+                        }
                     }
                     lblGrid.Text = "";
                     GetGrid(grid);
@@ -113,20 +123,36 @@ namespace Battleship
                 }
                 if(xdif == 2 && accu == 2 || accu == 3 || accu == 4)
                 {
-                    for (int i = x1; i <= x2; i++)
+                    if (x1 <= x2)
                     {
-                        if (grid[i, y1] == 0)
+                        for (int i = x1; i <= x2; i++)
                         {
-                            grid[i, y1] = 1;
+                            if (grid[i, y1] == 0)
+                            {
+                                grid[i, y1] = 1;
+                            }
+                            else
+                            {
+                                n1--;
+                            }
                         }
-                        else
+                    }
+                    else if(x1 >= x2)
+                    {
+                        for (int i = x1; i >= x2; i--)
                         {
-                            n1--;
+                            if (grid[i, y1] == 0)
+                            {
+                                grid[i, y1] = 1;
+                            }
+                            else
+                            {
+                                n1--;
+                            }
                         }
                     }
                     if (n1 == 0)
                     {
-                        
                         lblGrid.Text = "";
                         GetGrid(grid);
                         accu++;
@@ -139,15 +165,32 @@ namespace Battleship
                 }
                 if (xdif == 1 && accu == 5 || accu == 6 || accu == 7 || accu == 8)
                 {
-                    for (int i = x1; i <= x2; i++)
+                    if (x1 <= x2)
                     {
-                        if (grid[i, y1] == 0)
+                        for (int i = x1; i <= x2; i++)
                         {
-                            grid[i, y1] = 1;
+                            if (grid[i, y1] == 0)
+                            {
+                                grid[i, y1] = 1;
+                            }
+                            else
+                            {
+                                n1--;
+                            }
                         }
-                        else
+                    }
+                    else if(x1 >= x2)
+                    {
+                        for (int i = x1; i >= x2; i--)
                         {
-                            n1--;
+                            if (grid[i, y1] == 0)
+                            {
+                                grid[i, y1] = 1;
+                            }
+                            else
+                            {
+                                n1--;
+                            }
                         }
                     }
                     if (n1 == 0)
@@ -168,9 +211,19 @@ namespace Battleship
             {
                 if (ydif == 3 && accu == 1)
                 {
-                    for (int i = y1; i <= y2; i++)
+                    if (y1 <= y2)
                     {
-                        grid[x1, i] = 1;
+                        for (int i = y1; i <= y2; i++)
+                        {
+                            grid[x1, i] = 1;
+                        }
+                    }
+                    else if(y1 >= y2)
+                    {
+                        for (int i = y1; i >= y2; i--)
+                        {
+                            grid[x1, i] = 1;
+                        }
                     }
                     lblGrid.Text = "";
                     GetGrid(grid);
@@ -178,15 +231,32 @@ namespace Battleship
                 }
                 if (ydif == 2 && accu == 2 || accu == 3 || accu == 4)
                 {
-                    for (int i = y1; i <= y2; i++)
+                    if (y1 <= y2)
                     {
-                        if (grid[x1, i] == 0)
+                        for (int i = y1; i <= y2; i++)
                         {
-                            grid[x1, i] = 1;
+                            if (grid[x1, i] == 0)
+                            {
+                                grid[x1, i] = 1;
+                            }
+                            else
+                            {
+                                n1--;
+                            }
                         }
-                        else
+                    }
+                    else if(y1 >= y2)
+                    {
+                        for (int i = y1; i >= y2; i--)
                         {
-                            n1--;
+                            if (grid[x1, i] == 0)
+                            {
+                                grid[x1, i] = 1;
+                            }
+                            else
+                            {
+                                n1--;
+                            }
                         }
                     }
                     if (n1 == 0)
@@ -204,15 +274,32 @@ namespace Battleship
                 }
                 if (ydif == 1 && accu == 5 || accu == 6 || accu == 7 || accu == 8)
                 {
-                    for (int i = y1; i <= y2; i++)
+                    if (y1 <= y2)
                     {
-                        if (grid[x1, i] == 0)
+                        for (int i = y1; i <= y2; i++)
                         {
-                            grid[x1, i] = 1;
+                            if (grid[x1, i] == 0)
+                            {
+                                grid[x1, i] = 1;
+                            }
+                            else
+                            {
+                                n1--;
+                            }
                         }
-                        else
+                    }
+                    else if(y1 >= y2)
+                    {
+                        for (int i = y1; i >= y2; i--)
                         {
-                            n1--;
+                            if (grid[x1, i] == 0)
+                            {
+                                grid[x1, i] = 1;
+                            }
+                            else
+                            {
+                                n1--;
+                            }
                         }
                     }
                     if (n1 == 0)
@@ -230,7 +317,7 @@ namespace Battleship
                 }
             }
             
-            if(x1 != x2 && y1 != y2)// If they try to go diagonally 
+            if(x1 != x2 && y1 != y2) //If they try to go diagonally 
             {
                 MessageBox.Show("Ships can't go diagonally.");
             }
@@ -241,7 +328,6 @@ namespace Battleship
             GetAttackGrid(attackgrid);
             GetGrid(grid);
         }
-
         private void btnSet_Click(object sender, EventArgs e)
         {
             try
@@ -267,7 +353,6 @@ namespace Battleship
                 else if (accu == 3 || accu == 4)
                 {
                     lblShips.Text = "Destroyer - " + ns.ToString() + " Left";
-                    
                 }
                 else if(accu == 5)
                 {
@@ -286,14 +371,11 @@ namespace Battleship
             {
                MessageBox.Show(ex.Message);
             }
-
         }
-
         private void btnAttack_Click(object sender, EventArgs e)
         {
 
         }
-
         private void btnReset_Click(object sender, EventArgs e)
         {
             ns = 3;
