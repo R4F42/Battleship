@@ -37,9 +37,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.lblShips = new System.Windows.Forms.Label();
-            this.lblAttack = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.lblAttack = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblGrid
@@ -106,7 +106,7 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(476, 332);
+            this.btnReset.Location = new System.Drawing.Point(482, 332);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(75, 80);
             this.btnReset.TabIndex = 7;
@@ -122,14 +122,6 @@
             this.lblShips.Size = new System.Drawing.Size(89, 13);
             this.lblShips.TabIndex = 8;
             this.lblShips.Text = "Battleship - 1 Left";
-            // 
-            // lblAttack
-            // 
-            this.lblAttack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblAttack.Location = new System.Drawing.Point(321, 42);
-            this.lblAttack.Name = "lblAttack";
-            this.lblAttack.Size = new System.Drawing.Size(227, 256);
-            this.lblAttack.TabIndex = 9;
             // 
             // label3
             // 
@@ -151,14 +143,24 @@
             this.label4.Text = "Enemy Region";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblAttack
+            // 
+            this.lblAttack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblAttack.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAttack.Location = new System.Drawing.Point(310, 41);
+            this.lblAttack.Name = "lblAttack";
+            this.lblAttack.Size = new System.Drawing.Size(247, 257);
+            this.lblAttack.TabIndex = 12;
+            this.lblAttack.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(636, 450);
+            this.Controls.Add(this.lblAttack);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.lblAttack);
             this.Controls.Add(this.lblShips);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.label2);
@@ -188,9 +190,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Label lblShips;
-        private System.Windows.Forms.Label lblAttack;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblAttack;
     }
 }
 
