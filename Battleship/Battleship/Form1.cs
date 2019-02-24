@@ -323,6 +323,29 @@ namespace Battleship
             }
             txtXY.Text = "";
         }
+        private void GenShip()
+        {
+            for(int i = 0; i < 4; i++) // Battleship
+            {
+
+            }
+
+            for(int j = 0; j < 3; j++) // Destroyer
+            {
+                for(int k = 0; k < 3; k++)
+                {
+
+                }
+            }
+
+            for(int l = 0; l < 4; l++) // Submarines
+            {
+                for(int a = 0; a < 2; a++)
+                {
+
+                }
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             GetAttackGrid(attackgrid);
