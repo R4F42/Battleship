@@ -30,18 +30,27 @@ namespace Battleship
                                      {0, 0, 0, 0, 0, 0, 0, 0},
                                      {0, 0, 0, 0, 0, 0, 0, 0}};
 
+        public int[,] enemygrid = { {0, 0, 0, 0, 0, 0, 0, 0},
+                                     {0, 0, 0, 0, 0, 0, 0, 0},
+                                     {0, 0, 0, 0, 0, 0, 0, 0},
+                                     {0, 0, 0, 0, 0, 0, 0, 0},
+                                     {0, 0, 0, 0, 0, 0, 0, 0},
+                                     {0, 0, 0, 0, 0, 0, 0, 0},
+                                     {0, 0, 0, 0, 0, 0, 0, 0},
+                                     {0, 0, 0, 0, 0, 0, 0, 0}};
+
         public int[] shippos = new int[4];
         public int accu = 1;
-        public int ns = 3,ns2 = 4;
+        public int ns = 3, ns2 = 4;
         public Form1()
         {
             InitializeComponent();
         }
         private void GetGrid(int[,] gridname)
         {
-            for(int i = 0; i < 8; i++)
+            for (int i = 0; i < 8; i++)
             {
-                for(int j = 0; j < 8; j++)
+                for (int j = 0; j < 8; j++)
                 {
                     lblGrid.Text += gridname[i, j].ToString() + "      ";
                     if (j == 7)
@@ -81,7 +90,7 @@ namespace Battleship
             int x1 = shippos[0], y1 = shippos[1], x2 = shippos[2], y2 = shippos[3];
             int xdif = 0, ydif = 0;
 
-            if(x1 - x2 < 0) // Find diff between x's
+            if (x1 - x2 < 0) // Find diff between x's
             {
                 xdif = (x1 - x2) * -1;
             }
@@ -110,7 +119,7 @@ namespace Battleship
                             grid[i, y1] = 1;
                         }
                     }
-                    else if(x1 >= x2)
+                    else if (x1 >= x2)
                     {
                         for (int i = x1; i >= x2; i--)
                         {
@@ -121,7 +130,7 @@ namespace Battleship
                     GetGrid(grid);
                     accu++;
                 }
-                if(xdif == 2 && accu == 2 || accu == 3 || accu == 4)
+                if (xdif == 2 && accu == 2 || accu == 3 || accu == 4)
                 {
                     if (x1 <= x2)
                     {
@@ -137,7 +146,7 @@ namespace Battleship
                             }
                         }
                     }
-                    else if(x1 >= x2)
+                    else if (x1 >= x2)
                     {
                         for (int i = x1; i >= x2; i--)
                         {
@@ -179,7 +188,7 @@ namespace Battleship
                             }
                         }
                     }
-                    else if(x1 >= x2)
+                    else if (x1 >= x2)
                     {
                         for (int i = x1; i >= x2; i--)
                         {
@@ -207,7 +216,7 @@ namespace Battleship
                     }
                 }
             }
-            if(x1 == x2) // If you are staying in the row
+            if (x1 == x2) // If you are staying in the row
             {
                 if (ydif == 3 && accu == 1)
                 {
@@ -218,7 +227,7 @@ namespace Battleship
                             grid[x1, i] = 1;
                         }
                     }
-                    else if(y1 >= y2)
+                    else if (y1 >= y2)
                     {
                         for (int i = y1; i >= y2; i--)
                         {
@@ -245,7 +254,7 @@ namespace Battleship
                             }
                         }
                     }
-                    else if(y1 >= y2)
+                    else if (y1 >= y2)
                     {
                         for (int i = y1; i >= y2; i--)
                         {
@@ -288,7 +297,7 @@ namespace Battleship
                             }
                         }
                     }
-                    else if(y1 >= y2)
+                    else if (y1 >= y2)
                     {
                         for (int i = y1; i >= y2; i--)
                         {
@@ -316,8 +325,8 @@ namespace Battleship
                     }
                 }
             }
-            
-            if(x1 != x2 && y1 != y2) //If they try to go diagonally 
+
+            if (x1 != x2 && y1 != y2) //If they try to go diagonally 
             {
                 MessageBox.Show("Ships can't go diagonally.");
             }
@@ -325,29 +334,126 @@ namespace Battleship
         }
         private void GenShip()
         {
-            for(int i = 0; i < 4; i++) // Battleship
+            Random rand = new Random();
+            int x = rand.Next(7);
+            int y = rand.Next(7);
+            int x2 = rand.Next(7);
+            int y2 = rand.Next(7);
+            int c = rand.Next(0,2);
+            int ea = 0;
+            int ydif;
+            int xdif;
+            if (x == x2)
             {
-
-            }
-
-            for(int j = 0; j < 3; j++) // Destroyer
-            {
-                for(int k = 0; k < 3; k++)
+                if(ea == 0)
                 {
-
+                    if(y > y2)
+                    {
+                        ydif = y - y2;
+                        while(ydif != 3)
+                        {
+                            y2 = rand.Next(7);
+                            ydif = y - y2;
+                        }
+                    }
+                    else if(y < y2)
+                    {
+                        ydif = y2 - y;
+                        while (ydif != 3)
+                        {
+                            y = rand.Next(7);
+                            ydif = y2 - y;
+                        }
+                    }
+                }
+            }
+            else if (y == y2)
+            {
+                if (ea == 0)
+                {
+                    if (x > x2)
+                    {
+                        xdif = x - x2;
+                        while (xdif != 3)
+                        {
+                            x2 = rand.Next(7);
+                            xdif = x - x2;
+                        }
+                    }
+                    else if (x < x2)
+                    {
+                        xdif = x2 - x;
+                        while (xdif != 3)
+                        {
+                            x = rand.Next(7);
+                            xdif = x2 - x;
+                        }
+                    }
+                }
+            }
+            if (x2 != x && y != y2)
+            {
+                if (c == 0)
+                {
+                    while (x2 != x)
+                    {
+                        x2 = rand.Next(7);
+                    }
+                    if (ea == 0)
+                    {
+                        if (y > y2)
+                        {
+                            ydif = y - y2;
+                            while (ydif != 3)
+                            {
+                                y2 = rand.Next(7);
+                                ydif = y - y2;
+                            }
+                        }
+                        else if (y < y2)
+                        {
+                            ydif = y2 - y;
+                            while (ydif != 3)
+                            {
+                                y = rand.Next(7);
+                                ydif = y2 - y;
+                            }
+                        }
+                    }
+                }
+                if (c == 1)
+                {
+                    while (y2 != y)
+                    {
+                        y2 = rand.Next(7);
+                    }
+                    if (x > x2)
+                    {
+                        xdif = x - x2;
+                        while (xdif != 3)
+                        {
+                            x2 = rand.Next(7);
+                            xdif = x - x2;
+                        }
+                    }
+                    else if (x < x2)
+                    {
+                        xdif = x2 - x;
+                        while (xdif != 3)
+                        {
+                            x = rand.Next(7);
+                            xdif = x2 - x;
+                        }
+                    }
                 }
             }
 
-            for(int l = 0; l < 4; l++) // Submarines
-            {
-                for(int a = 0; a < 2; a++)
-                {
-
-                }
-            }
+            MessageBox.Show("x2 = " + x2.ToString() + " x = " + x.ToString() + " y2 = " + y2.ToString() + " y = " + y.ToString());
         }
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            GenShip();
             GetAttackGrid(attackgrid);
             GetGrid(grid);
         }
@@ -360,16 +466,16 @@ namespace Battleship
                 int a2 = 0;
                 for (int i = 0; i < txtXY.Text.Length; i++)
                 {
-                    
+
                     if (input[i] == '0' || input[i] == '1' || input[i] == '2' || input[i] == '3' ||
                         input[i] == '4' || input[i] == '5' || input[i] == '6' || input[i] == '7')
                     {
                         shippos[a2] = (int)char.GetNumericValue(input[i]);
                         a2++;
-                    }  
+                    }
                 }
                 SetShip();
-                if(accu == 2)
+                if (accu == 2)
                 {
                     lblShips.Text = "Destroyer - " + ns.ToString() + " Left";
                 }
@@ -377,11 +483,11 @@ namespace Battleship
                 {
                     lblShips.Text = "Destroyer - " + ns.ToString() + " Left";
                 }
-                else if(accu == 5)
+                else if (accu == 5)
                 {
                     lblShips.Text = "Submarine - " + ns2.ToString() + " Left";
                 }
-                else if(accu == 6 || accu == 7 || accu == 8)
+                else if (accu == 6 || accu == 7 || accu == 8)
                 {
                     lblShips.Text = "Submarine - " + ns2.ToString() + " Left";
                 }
@@ -390,9 +496,9 @@ namespace Battleship
                     lblShips.Text = "You are out of ships.";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
         private void btnAttack_Click(object sender, EventArgs e)
@@ -418,4 +524,6 @@ namespace Battleship
             txtXY.Text = "";
         }
     }
+
 }
+
