@@ -20,7 +20,6 @@ namespace Battleship
                                {0, 0, 0, 0, 0, 0, 0, 0},
                                {0, 0, 0, 0, 0, 0, 0, 0},
                                {0, 0, 0, 0, 0, 0, 0, 0}};
-
         public int[,] attackgrid = { {0, 0, 0, 0, 0, 0, 0, 0},
                                      {0, 0, 0, 0, 0, 0, 0, 0},
                                      {0, 0, 0, 0, 0, 0, 0, 0},
@@ -29,7 +28,6 @@ namespace Battleship
                                      {0, 0, 0, 0, 0, 0, 0, 0},
                                      {0, 0, 0, 0, 0, 0, 0, 0},
                                      {0, 0, 0, 0, 0, 0, 0, 0}};
-
         public int[,] enemygrid = { {0, 0, 0, 0, 0, 0, 0, 0},
                                      {0, 0, 0, 0, 0, 0, 0, 0},
                                      {0, 0, 0, 0, 0, 0, 0, 0},
@@ -38,8 +36,8 @@ namespace Battleship
                                      {0, 0, 0, 0, 0, 0, 0, 0},
                                      {0, 0, 0, 0, 0, 0, 0, 0},
                                      {0, 0, 0, 0, 0, 0, 0, 0}};
-
         public int[] shippos = new int[4];
+        public int[] attackpos = new int[2];
         public int accu = 1;
         public int ns = 3, ns2 = 4;
         public Form1()
@@ -52,7 +50,14 @@ namespace Battleship
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    lblGrid.Text += gridname[i, j].ToString() + "      ";
+                    if (gridname[i, j] == 0)
+                    {
+                        lblGrid.Text += "▒ ";
+                    }
+                    else if (gridname[i, j] == 1)
+                    {
+                        lblGrid.Text += "0 ";
+                    }
                     if (j == 7)
                     {
                         lblGrid.Text += "\r\n\r\n";
@@ -62,14 +67,51 @@ namespace Battleship
         }
         private void GetAttackGrid(int[,] gridname)
         {
+            lblAttack.Text = "";
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    lblAttack.Text += gridname[i, j].ToString() + "      ";
+                    if (gridname[i, j] == 0)
+                    {
+                        lblAttack.Text += "▒ ";
+                    }
+                    else if (gridname[i, j] == 1)
+                    {
+                        lblAttack.Text += "0 ";
+                    }
+                    else if (gridname[i, j] == 2)
+                    {
+                        lblAttack.Text += "X ";
+                    }
+                    else if (gridname[i, j] == 3)
+                    {
+                        lblAttack.Text += "3 ";
+                    }
                     if (j == 7)
                     {
                         lblAttack.Text += "\r\n\r\n";
+                    }
+                }
+            }
+        }
+        private void AIshipsDebug()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (enemygrid[i, j] == 0)
+                    {
+                        lblDebug.Text += "▒ ";
+                    }
+                    else if (enemygrid[i, j] == 1)
+                    {
+                        lblDebug.Text += "0 ";
+                    }
+                    if (j == 7)
+                    {
+                        lblDebug.Text += "\r\n\r\n";
                     }
                 }
             }
@@ -84,6 +126,7 @@ namespace Battleship
                                { 0, 0, 0, 0, 0, 0, 0, 0},
                                { 0, 0, 0, 0, 0, 0, 0, 0},
                                { 0, 0, 0, 0, 0, 0, 0, 0}, };
+
         }
         private void SetShip()
         {
@@ -130,7 +173,7 @@ namespace Battleship
                     GetGrid(grid);
                     accu++;
                 }
-                if (xdif == 2 && accu == 2 || accu == 3 || accu == 4)
+                if ((xdif == 2 && accu == 2) || (xdif == 2 && accu == 3) || (xdif == 2 && accu == 4))
                 {
                     if (x1 <= x2)
                     {
@@ -172,7 +215,7 @@ namespace Battleship
                         ResetGrid();
                     }
                 }
-                if (xdif == 1 && accu == 5 || accu == 6 || accu == 7 || accu == 8)
+                if ((xdif == 1 && accu == 5) || (xdif == 1 && accu == 6) || (xdif == 1 && accu == 7) || (xdif == 1 && accu == 8))
                 {
                     if (x1 <= x2)
                     {
@@ -238,7 +281,7 @@ namespace Battleship
                     GetGrid(grid);
                     accu++;
                 }
-                if (ydif == 2 && accu == 2 || accu == 3 || accu == 4)
+                if ((ydif == 2 && accu == 2) || (ydif == 2 && accu == 3) || (ydif == 2 && accu == 4))
                 {
                     if (y1 <= y2)
                     {
@@ -281,7 +324,7 @@ namespace Battleship
                         ResetGrid();
                     }
                 }
-                if (ydif == 1 && accu == 5 || accu == 6 || accu == 7 || accu == 8)
+                if ((ydif == 1 && accu == 5) || (ydif == 1 && accu == 6) || (ydif == 1 && accu == 7) || (ydif == 1 && accu == 8))
                 {
                     if (y1 <= y2)
                     {
@@ -332,130 +375,93 @@ namespace Battleship
             }
             txtXY.Text = "";
         }
-        private void GenShip()
+        private void ShipGen()
         {
             Random rand = new Random();
-            int x = rand.Next(7);
-            int y = rand.Next(7);
-            int x2 = rand.Next(7);
-            int y2 = rand.Next(7);
-            int c = rand.Next(0,2);
-            int ea = 0;
-            int ydif;
-            int xdif;
-            if (x == x2)
+            int x = rand.Next(8), y = rand.Next(8), coinflip = rand.Next(2), x2 = 0, y2 = 0, st = 0;
+            if(coinflip == 0) // Stay in row 
             {
-                if(ea == 0)
+                x2 = x;
+                if(st == 0) // Battleship
                 {
+                    if(y > 2)
+                    {
+                        y2 = y - 3;
+                    }
+                    else if(y <= 2)
+                    {
+                        y2 = y + 3;
+                    }
                     if(y > y2)
                     {
-                        ydif = y - y2;
-                        while(ydif != 3)
+                        for(int yi = y; yi >= y2; yi--)
                         {
-                            y2 = rand.Next(7);
-                            ydif = y - y2;
+                            enemygrid[x, yi] = 1;
                         }
                     }
-                    else if(y < y2)
+                    if(y < y2)
                     {
-                        ydif = y2 - y;
-                        while (ydif != 3)
+                        for (int yi = y; yi <= y2; yi++)
                         {
-                            y = rand.Next(7);
-                            ydif = y2 - y;
-                        }
-                    }
-                }
-            }
-            else if (y == y2)
-            {
-                if (ea == 0)
-                {
-                    if (x > x2)
-                    {
-                        xdif = x - x2;
-                        while (xdif != 3)
-                        {
-                            x2 = rand.Next(7);
-                            xdif = x - x2;
-                        }
-                    }
-                    else if (x < x2)
-                    {
-                        xdif = x2 - x;
-                        while (xdif != 3)
-                        {
-                            x = rand.Next(7);
-                            xdif = x2 - x;
-                        }
-                    }
-                }
-            }
-            if (x2 != x && y != y2)
-            {
-                if (c == 0)
-                {
-                    while (x2 != x)
-                    {
-                        x2 = rand.Next(7);
-                    }
-                    if (ea == 0)
-                    {
-                        if (y > y2)
-                        {
-                            ydif = y - y2;
-                            while (ydif != 3)
-                            {
-                                y2 = rand.Next(7);
-                                ydif = y - y2;
-                            }
-                        }
-                        else if (y < y2)
-                        {
-                            ydif = y2 - y;
-                            while (ydif != 3)
-                            {
-                                y = rand.Next(7);
-                                ydif = y2 - y;
-                            }
-                        }
-                    }
-                }
-                if (c == 1)
-                {
-                    while (y2 != y)
-                    {
-                        y2 = rand.Next(7);
-                    }
-                    if (x > x2)
-                    {
-                        xdif = x - x2;
-                        while (xdif != 3)
-                        {
-                            x2 = rand.Next(7);
-                            xdif = x - x2;
-                        }
-                    }
-                    else if (x < x2)
-                    {
-                        xdif = x2 - x;
-                        while (xdif != 3)
-                        {
-                            x = rand.Next(7);
-                            xdif = x2 - x;
+                            enemygrid[x, yi] = 1;
                         }
                     }
                 }
             }
 
-            MessageBox.Show("x2 = " + x2.ToString() + " x = " + x.ToString() + " y2 = " + y2.ToString() + " y = " + y.ToString());
+            if (coinflip == 1) // Stay in column
+            {
+                y2 = y;
+                if (st == 0) // Battleship
+                {
+                    if (x > 2)
+                    {
+                        x2 = x - 3;
+                    }
+                    else if (x < 2)
+                    {
+                        x2 = x + 3;
+                    }
+                    if (x > x2)
+                    {
+                        for (int xi = x; xi >= x2; xi--)
+                        {
+                            enemygrid[xi, y] = 1;
+                        }
+                    }
+                    if (x < x2)
+                    {
+                        for (int xi = x; xi <= x2; xi++)
+                        {
+                            enemygrid[xi, y] = 1;
+                        }
+                    }
+                }
+            }
+            MessageBox.Show(x.ToString() + " " + y.ToString() + " " + x2.ToString() + " " + y2.ToString());
         }
-
+        private void Attack()
+        {
+            int x, y;
+            x = attackpos[0];
+            y = attackpos[1];
+            if(enemygrid[x,y] == 1)
+            {
+                attackgrid[x, y] = 2;
+                GetAttackGrid(attackgrid);
+            }
+            else if(enemygrid[x,y] == 0)
+            {
+                attackgrid[x, y] = 3;
+                GetAttackGrid(attackgrid);
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
-            GenShip();
+            ShipGen();
             GetAttackGrid(attackgrid);
             GetGrid(grid);
+            AIshipsDebug();
         }
         private void btnSet_Click(object sender, EventArgs e)
         {
@@ -503,7 +509,30 @@ namespace Battleship
         }
         private void btnAttack_Click(object sender, EventArgs e)
         {
-
+            char[] input;
+            input = txtAttack.Text.ToArray();
+            int a2 = 0, stupid = 0;
+            for (int i = 0; i < txtAttack.Text.Length; i++)
+            {
+                if (input[i] == '0' || input[i] == '1' || input[i] == '2' || input[i] == '3' ||
+                    input[i] == '4' || input[i] == '5' || input[i] == '6' || input[i] == '7')
+                {
+                    attackpos[a2] = (int)char.GetNumericValue(input[i]);
+                    a2++;
+                }
+                else
+                {
+                    stupid++;
+                }
+            }
+            if (stupid > 0)
+            {
+                MessageBox.Show("Stupid Idea!");
+            }
+            else
+            {
+                Attack();
+            }
         }
         private void btnReset_Click(object sender, EventArgs e)
         {
@@ -524,6 +553,5 @@ namespace Battleship
             txtXY.Text = "";
         }
     }
-
 }
 
