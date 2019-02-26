@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+// System.Threading.Thread.Sleep(delaytime in ms); Ai think time so player can percieve the game.
 namespace Battleship
 {
     public partial class Form1 : Form
@@ -52,15 +52,15 @@ namespace Battleship
                 {
                     if (gridname[i, j] == 0)
                     {
-                        lblGrid.Text += "▒ ";
+                        lblGrid.Text += "0 ";
                     }
                     else if (gridname[i, j] == 1)
                     {
-                        lblGrid.Text += "0 ";
+                        lblGrid.Text += "1 ";
                     }
                     if (j == 7)
                     {
-                        lblGrid.Text += "\r\n\r\n";
+                        lblGrid.Text += "\r\n";
                     }
                 }
             }
@@ -74,11 +74,11 @@ namespace Battleship
                 {
                     if (gridname[i, j] == 0)
                     {
-                        lblAttack.Text += "▒ ";
+                        lblAttack.Text += "0 ";
                     }
                     else if (gridname[i, j] == 1)
                     {
-                        lblAttack.Text += "0 ";
+                        lblAttack.Text += "1 ";
                     }
                     else if (gridname[i, j] == 2)
                     {
@@ -90,7 +90,7 @@ namespace Battleship
                     }
                     if (j == 7)
                     {
-                        lblAttack.Text += "\r\n\r\n";
+                        lblAttack.Text += "\r\n";
                     }
                 }
             }
@@ -103,15 +103,15 @@ namespace Battleship
                 {
                     if (enemygrid[i, j] == 0)
                     {
-                        lblDebug.Text += "▒ ";
+                        lblDebug.Text += "0 ";
                     }
                     else if (enemygrid[i, j] == 1)
                     {
-                        lblDebug.Text += "0 ";
+                        lblDebug.Text += "1 ";
                     }
                     if (j == 7)
                     {
-                        lblDebug.Text += "\r\n\r\n";
+                        lblDebug.Text += "\r\n";
                     }
                 }
             }
@@ -378,7 +378,7 @@ namespace Battleship
         private void ShipGen()
         {
             Random rand = new Random();
-            int x = rand.Next(8), y = rand.Next(8), coinflip = rand.Next(2), x2 = 0, y2 = 0, st = 0;
+            int x = rand.Next(8), y = rand.Next(8), coinflip = rand.Next(2), x2 = 0, y2 = 0, st = 0, ev = 0;
             if(coinflip == 0) // Stay in row 
             {
                 x2 = x;
@@ -406,10 +406,140 @@ namespace Battleship
                             enemygrid[x, yi] = 1;
                         }
                     }
+                    st++;
+                }
+                if (st == 1) // Destroyers
+                {
+                    
+                    for (int k = 0; k < 3; k++)
+                    {
+                        x = rand.Next(8);
+                        y = rand.Next(8);
+                        x2 = x;
+                        if (y > 2)
+                        {
+                            y2 = y - 2;
+                        }
+                        else if (y <= 2)
+                        {
+                            y2 = y + 2;
+                        }
+                        if (y > y2)
+                        {
+                            for (int yi = y; yi >= y2; yi--)
+                            {
+                                if (enemygrid[x, yi] == 0)
+                                {
+                                    enemygrid[x, yi] = 1;
+                                }
+                                else
+                                {
+                                    ev++;
+                                }
+                            }
+                            if(ev > 0)
+                            {
+                                for (int yi = y; yi >= y2; yi--)
+                                {
+                                        enemygrid[x, yi] = 0;
+                                }
+                                ev = 0;
+                                k--;
+                            }
+                        }
+                        if (y < y2)
+                        {
+                            for (int yi = y; yi <= y2; yi++)
+                            {
+                                if (enemygrid[x, yi] == 0)
+                                {
+                                    enemygrid[x, yi] = 1;
+                                }
+                                else
+                                {
+                                    ev++;
+                                }
+                            }
+                            if(ev > 0)
+                            {
+                                for (int yi = y; yi <= y2; yi++)
+                                {
+                                        enemygrid[x, yi] = 0;
+                                }
+                                ev = 0;
+                                k--;
+                            }
+                        }
+                    }
+                    st++;
+                }
+                if (st == 2) // Submarines
+                {
+                    for (int k = 0; k < 4; k++)
+                    {
+                        x = rand.Next(8);
+                        y = rand.Next(8);
+                        x2 = x;
+                        if (y > 1)
+                        {
+                            y2 = y - 1;
+                        }
+                        else if (y <= 1)
+                        {
+                            y2 = y + 1;
+                        }
+                        if (y > y2)
+                        {
+                            for (int yi = y; yi >= y2; yi--)
+                            {
+                                if (enemygrid[x, yi] == 0)
+                                {
+                                    enemygrid[x, yi] = 1;
+                                }
+                                else
+                                {
+                                    ev++;
+                                }
+                            }
+                            if(ev > 0)
+                            {
+                                for (int yi = y; yi >= y2; yi--)
+                                {
+                                        enemygrid[x, yi] = 0;
+                                }
+                                ev = 0;
+                                k--;
+                            }
+                        }
+                        if (y < y2)
+                        {
+                            for (int yi = y; yi <= y2; yi++)
+                            {
+                                if (enemygrid[x, yi] == 0)
+                                {
+                                    enemygrid[x, yi] = 1;
+                                }
+                                else
+                                {
+                                    ev++;
+                                }
+                            }
+                            if(ev > 0)
+                            {
+                                for (int yi = y; yi <= y2; yi++)
+                                {
+                                    enemygrid[x, yi] = 0;
+                                }
+                                ev = 0;
+                                k--;
+                            }
+                        }
+                    }
+                    st++;
                 }
             }
 
-            if (coinflip == 1) // Stay in column
+            if (coinflip == 2) // Stay in column set to 1
             {
                 y2 = y;
                 if (st == 0) // Battleship

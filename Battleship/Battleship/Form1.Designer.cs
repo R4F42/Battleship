@@ -50,7 +50,7 @@
             // lblGrid
             // 
             this.lblGrid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblGrid.Font = new System.Drawing.Font("Commodore 64", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.lblGrid.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGrid.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.lblGrid.Location = new System.Drawing.Point(16, 61);
             this.lblGrid.Name = "lblGrid";
@@ -170,7 +170,7 @@
             // lblAttack
             // 
             this.lblAttack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblAttack.Font = new System.Drawing.Font("Commodore 64", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.lblAttack.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAttack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.lblAttack.Location = new System.Drawing.Point(258, 61);
             this.lblAttack.Name = "lblAttack";
@@ -181,7 +181,7 @@
             // lblDebug
             // 
             this.lblDebug.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblDebug.Font = new System.Drawing.Font("Commodore 64", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.lblDebug.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDebug.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.lblDebug.Location = new System.Drawing.Point(499, 61);
             this.lblDebug.Name = "lblDebug";
