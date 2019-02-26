@@ -416,11 +416,11 @@ namespace Battleship
                         x = rand.Next(8);
                         y = rand.Next(8);
                         x2 = x;
-                        if (y > 2)
+                        if (y > 1)
                         {
                             y2 = y - 2;
                         }
-                        else if (y <= 2)
+                        else if (y <= 1)
                         {
                             y2 = y + 2;
                         }
@@ -434,6 +434,7 @@ namespace Battleship
                                 }
                                 else
                                 {
+                                    enemygrid[x, yi] = 2;
                                     ev++;
                                 }
                             }
@@ -441,7 +442,14 @@ namespace Battleship
                             {
                                 for (int yi = y; yi >= y2; yi--)
                                 {
+                                    if (enemygrid[x, yi] == 1)
+                                    {
                                         enemygrid[x, yi] = 0;
+                                    }
+                                    else if(enemygrid[x,yi] == 2)
+                                    {
+                                        enemygrid[x, yi] = 1;
+                                    }
                                 }
                                 ev = 0;
                                 k--;
@@ -457,6 +465,7 @@ namespace Battleship
                                 }
                                 else
                                 {
+                                    enemygrid[x, yi] = 2;
                                     ev++;
                                 }
                             }
@@ -464,7 +473,14 @@ namespace Battleship
                             {
                                 for (int yi = y; yi <= y2; yi++)
                                 {
+                                    if (enemygrid[x, yi] == 1)
+                                    {
                                         enemygrid[x, yi] = 0;
+                                    }
+                                    else if(enemygrid[x,yi] == 2)
+                                    {
+                                        enemygrid[x, yi] = 1;
+                                    }
                                 }
                                 ev = 0;
                                 k--;
@@ -480,11 +496,11 @@ namespace Battleship
                         x = rand.Next(8);
                         y = rand.Next(8);
                         x2 = x;
-                        if (y > 1)
+                        if (y > 0)
                         {
                             y2 = y - 1;
                         }
-                        else if (y <= 1)
+                        else if (y <= 0)
                         {
                             y2 = y + 1;
                         }
@@ -498,6 +514,7 @@ namespace Battleship
                                 }
                                 else
                                 {
+                                    enemygrid[x, yi] = 2;
                                     ev++;
                                 }
                             }
@@ -505,7 +522,14 @@ namespace Battleship
                             {
                                 for (int yi = y; yi >= y2; yi--)
                                 {
+                                    if (enemygrid[x, yi] == 1)
+                                    {
                                         enemygrid[x, yi] = 0;
+                                    }
+                                    else if(enemygrid[x,yi] == 2)
+                                    {
+                                        enemygrid[x, yi] = 1;
+                                    }
                                 }
                                 ev = 0;
                                 k--;
@@ -521,6 +545,7 @@ namespace Battleship
                                 }
                                 else
                                 {
+                                    enemygrid[x, yi] = 2;
                                     ev++;
                                 }
                             }
@@ -528,14 +553,21 @@ namespace Battleship
                             {
                                 for (int yi = y; yi <= y2; yi++)
                                 {
-                                    enemygrid[x, yi] = 0;
+                                    if (enemygrid[x, yi] == 1)
+                                    {
+                                        enemygrid[x, yi] = 0;
+                                    }
+                                    else if(enemygrid[x,yi] == 2)
+                                    {
+                                        enemygrid[x, yi] = 1;
+                                    }
                                 }
                                 ev = 0;
                                 k--;
                             }
                         }
                     }
-                    st++;
+                    st = 0;
                 }
             }
 
@@ -566,9 +598,10 @@ namespace Battleship
                             enemygrid[xi, y] = 1;
                         }
                     }
+                    st++;
                 }
             }
-            MessageBox.Show(x.ToString() + " " + y.ToString() + " " + x2.ToString() + " " + y2.ToString());
+            //MessageBox.Show(x.ToString() + " " + y.ToString() + " " + x2.ToString() + " " + y2.ToString());
         }
         private void Attack()
         {
