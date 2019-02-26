@@ -376,7 +376,7 @@ namespace Battleship
             txtXY.Text = "";
         }
         private void ShipGen()
-        {
+        { 
             Random rand = new Random();
             int x = rand.Next(8), y = rand.Next(8), coinflip = rand.Next(2), x2 = 0, y2 = 0, st = 0, ev = 0;
             if(coinflip == 0) // Stay in row 
@@ -407,6 +407,7 @@ namespace Battleship
                         }
                     }
                     st++;
+                    
                 }
                 if (st == 1) // Destroyers
                 {
@@ -486,8 +487,10 @@ namespace Battleship
                                 k--;
                             }
                         }
+                        
                     }
                     st++;
+                    
                 }
                 if (st == 2) // Submarines
                 {
@@ -566,21 +569,22 @@ namespace Battleship
                                 k--;
                             }
                         }
+                        
                     }
                     st = 0;
                 }
             }
-
-            if (coinflip == 2) // Stay in column set to 1
+            if (coinflip == 1) // Stay in column
             {
-                y2 = y;
+                
                 if (st == 0) // Battleship
                 {
+                    y2 = y;
                     if (x > 2)
                     {
                         x2 = x - 3;
                     }
-                    else if (x < 2)
+                    else if (x <= 2)
                     {
                         x2 = x + 3;
                     }
@@ -598,10 +602,174 @@ namespace Battleship
                             enemygrid[xi, y] = 1;
                         }
                     }
+                    
+                    st++;
+                    
+                }
+                if(st == 1) //Destroyers
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        x = rand.Next(8);
+                        y = rand.Next(8);
+                        y2 = y;
+                        if (x > 1)
+                        {
+                            x2 = x - 2;
+                        }
+                        else if (x < 1)
+                        {
+                            x2 = x + 2;
+                        }
+                        if (x > x2)
+                        {
+                            for (int xi = x; xi >= x2; xi--)
+                            {
+                                if (enemygrid[xi, y] == 0)
+                                {
+                                    enemygrid[xi, y] = 1;
+                                }
+                                else
+                                {
+                                    enemygrid[xi, y] = 2;
+                                    ev++;
+                                }
+                            }
+                            if(ev > 0)
+                            {
+                                for (int xi = x; xi >= x2; xi--)
+                                {
+                                    if (enemygrid[xi, y] == 1)
+                                    {
+                                        enemygrid[xi, y] = 0;
+                                    }
+                                    else if(enemygrid[xi, y] == 2)
+                                    {
+                                        enemygrid[xi, y] = 1;
+                                    }
+                                }
+                                ev = 0;
+                                i--;
+                            }
+                        }
+                        if (x < x2)
+                        {
+                            for (int xi = x; xi <= x2; xi++)
+                            {
+                                if (enemygrid[xi, y] == 0)
+                                {
+                                    enemygrid[xi, y] = 1;
+                                }
+                                else
+                                {
+                                    ev++;
+                                    enemygrid[xi, y] = 2;
+                                }
+                            }
+                            if(ev > 0)
+                            {
+                                for (int xi = x; xi <= x2; xi++)
+                                {
+                                    if (enemygrid[xi, y] == 1)
+                                    {
+                                        enemygrid[xi, y] = 0;
+                                    }
+                                    else if(enemygrid[xi, y] == 2)
+                                    {
+                                        enemygrid[xi, y] = 1;
+                                    }
+                                }
+                                ev = 0;
+                                i--;
+                            }
+                        }
+                        
+                    }
                     st++;
                 }
+                if (st == 2) //Submarines
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        x = rand.Next(8);
+                        y = rand.Next(8);
+                        y2 = y;
+                        if (x > 0)
+                        {
+                            x2 = x - 1;
+                        }
+                        else if (x == 0)
+                        {
+                            x2 = x + 1;
+                        }
+                        if (x > x2)
+                        {
+                            for (int xi = x; xi >= x2; xi--)
+                            {
+                                if (enemygrid[xi, y] == 0)
+                                {
+                                    enemygrid[xi, y] = 1;
+                                }
+                                else
+                                {
+                                    enemygrid[xi, y] = 2;
+                                    ev++;
+                                }
+                            }
+                            if (ev > 0)
+                            {
+                                for (int xi = x; xi >= x2; xi--)
+                                {
+                                    if (enemygrid[xi, y] == 1)
+                                    {
+                                        enemygrid[xi, y] = 0;
+                                    }
+                                    else if (enemygrid[xi, y] == 2)
+                                    {
+                                        enemygrid[xi, y] = 1;
+                                    }
+                                }
+                                ev = 0;
+                                i--;
+                            }
+                        }
+                        if (x < x2)
+                        {
+                            for (int xi = x; xi <= x2; xi++)
+                            {
+                                if (enemygrid[xi, y] == 0)
+                                {
+                                    enemygrid[xi, y] = 1;
+                                }
+                                else
+                                {
+                                    ev++;
+                                    enemygrid[xi, y] = 2;
+                                }
+                            }
+                            if (ev > 0)
+                            {
+                                for (int xi = x; xi <= x2; xi++)
+                                {
+                                    if (enemygrid[xi, y] == 1)
+                                    {
+                                        enemygrid[xi, y] = 0;
+                                    }
+                                    else if (enemygrid[xi, y] == 2)
+                                    {
+                                        enemygrid[xi, y] = 1;
+                                    }
+                                }
+                                ev = 0;
+                                i--;
+                            }
+                        }
+                        
+                    }
+                    st = 0;
+                }
             }
-            //MessageBox.Show(x.ToString() + " " + y.ToString() + " " + x2.ToString() + " " + y2.ToString());
+            MessageBox.Show(x.ToString() + " " + y.ToString() + " " + x2.ToString() + " " + y2.ToString());
         }
         private void Attack()
         {
