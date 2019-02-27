@@ -12,6 +12,7 @@ namespace Battleship
 {
     public partial class Form1 : Form
     {
+        public int ax, ay, hi, dir, right, left, up, down, db = 0;
         public int[,] grid = { {0, 0, 0, 0, 0, 0, 0, 0},
                                {0, 0, 0, 0, 0, 0, 0, 0},
                                {0, 0, 0, 0, 0, 0, 0, 0},
@@ -44,8 +45,22 @@ namespace Battleship
         {
             InitializeComponent();
         }
+        private void ResetGrid()
+        {
+            
+            for(int ab = 0; ab < 8; ab++)
+            {
+                for(int ac = 0; ac < 8; ac++)
+                {
+                    grid[ab, ac] = 0;
+                    enemygrid[ab, ac] = 0;
+                    attackgrid[ab, ac] = 0;
+                }
+            }
+    }
         private void GetGrid(int[,] gridname)
         {
+            lblGrid.Text = "";
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
@@ -58,6 +73,15 @@ namespace Battleship
                     {
                         lblGrid.Text += "1 ";
                     }
+                    else if (gridname[i, j] == 2)
+                    {
+                        lblGrid.Text += "3 ";
+                    }
+                    else if (gridname[i, j] == 3)
+                    {
+                        lblGrid.Text += "X ";
+                    }
+
                     if (j == 7)
                     {
                         lblGrid.Text += "\r\n";
@@ -97,6 +121,8 @@ namespace Battleship
         }
         private void AIshipsDebug()
         {
+            lblDebug.Text = "";
+            
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
@@ -116,17 +142,21 @@ namespace Battleship
                 }
             }
         }
-        private void ResetGrid()
+        private void btnDebug_Click(object sender, EventArgs e)
         {
-            int[,] grid =     {{ 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0}, };
-
+            if (db == 0)
+            {
+                this.Size = new Size(713, 445);
+                lblDebug.Visible = true;
+                db++;
+            }
+            else
+            {
+                this.Size = new Size(483, 445);
+                lblDebug.Visible = false;
+                db = 0;
+            }
+            
         }
         private void SetShip()
         {
@@ -377,9 +407,16 @@ namespace Battleship
         }
         private void ShipGen()
         { 
-            Random rand = new Random();
-            int x = rand.Next(8), y = rand.Next(8), coinflip = rand.Next(2), x2 = 0, y2 = 0, st = 0, ev = 0;
-            if(coinflip == 0) // Stay in row 
+            Random rand = new Random(); // Athough ships are randomly generated
+                                        // Each ship isn't randomly vertical or
+                                        // horizontal. They are randomly generated
+                                        // as a set that is one or the other.
+                                        // But random horizontal structures are found
+                                        // in random vertical generations. Likewise
+                                        // for horizontal generations.
+            int x = rand.Next(8), y = rand.Next(8), coinflip = rand.Next(2), x2 = 0, y2 = 0, st = 0, ev = 0, d = 0, s = 0;
+            
+            if (coinflip == 0) // Stay in row 
             {
                 x2 = x;
                 if(st == 0) // Battleship
@@ -408,11 +445,12 @@ namespace Battleship
                     }
                     st++;
                     
+                    
                 }
                 if (st == 1) // Destroyers
                 {
                     
-                    for (int k = 0; k < 3; k++)
+                    for (int k = d; k < 3; k++)
                     {
                         x = rand.Next(8);
                         y = rand.Next(8);
@@ -488,13 +526,15 @@ namespace Battleship
                             }
                         }
                         
+                        
+                        
                     }
                     st++;
                     
                 }
                 if (st == 2) // Submarines
                 {
-                    for (int k = 0; k < 4; k++)
+                    for (int k = s; k < 4; k++)
                     {
                         x = rand.Next(8);
                         y = rand.Next(8);
@@ -570,10 +610,13 @@ namespace Battleship
                             }
                         }
                         
+                        
+                        
                     }
                     st = 0;
                 }
             }
+            
             if (coinflip == 1) // Stay in column
             {
                 
@@ -608,7 +651,7 @@ namespace Battleship
                 }
                 if(st == 1) //Destroyers
                 {
-                    for (int i = 0; i < 3; i++)
+                    for (int i = d; i < 3; i++)
                     {
                         x = rand.Next(8);
                         y = rand.Next(8);
@@ -684,12 +727,14 @@ namespace Battleship
                             }
                         }
                         
+                        
+                        
                     }
                     st++;
                 }
                 if (st == 2) //Submarines
                 {
-                    for (int i = 0; i < 4; i++)
+                    for (int i = s; i < 4; i++)
                     {
                         x = rand.Next(8);
                         y = rand.Next(8);
@@ -765,11 +810,13 @@ namespace Battleship
                             }
                         }
                         
+                        
+                        
                     }
                     st = 0;
                 }
             }
-            MessageBox.Show(x.ToString() + " " + y.ToString() + " " + x2.ToString() + " " + y2.ToString());
+            //MessageBox.Show(x.ToString() + " " + y.ToString() + " " + x2.ToString() + " " + y2.ToString());
         }
         private void Attack()
         {
@@ -786,6 +833,67 @@ namespace Battleship
                 attackgrid[x, y] = 3;
                 GetAttackGrid(attackgrid);
             }
+            AIattack();
+        }
+        private void AIattack()
+        {
+            Random rand = new Random();
+            int aa = 0;
+            if (aa == 0) // Randomize a position and attack
+            {
+                ax = rand.Next(8);
+                ay = rand.Next(8);
+                if(grid[ax,ay] == 1)
+                {
+                    hi++;
+                    grid[ax, ay] = 3;
+                    GetGrid(grid);
+                }
+                else
+                {
+                    grid[ax, ay] = 2;
+                    GetGrid(grid);
+                }
+                aa++;
+            }
+            else if(ax > 0 && ay > 0)       // If you can go in all directions from this point
+            {
+                 if(dir == 0 & right == 0)  // If you are going right and right hasn't
+                                            // attempted to hit anything.
+                {
+                    ay--;                   // Goes right from the randomized point.
+                    if (grid[ax, ay] == 1)
+                    {
+                        hi++;               // hit indicator
+                        grid[ax, ay] = 3;   
+                        GetGrid(grid);
+                        right++;            // Right hit something
+                    }
+                    else
+                    {
+                        right--;            // Right didn't hit something
+                        ay++;               // Returns to original position
+                    }
+                }
+                aa++;
+            }
+            if(hi > 0 && ax > 0 && ay > 0)        // If you hit something
+            {
+                if(right > 0) // If you hit something going right
+                {
+                    ay--;
+                    if(grid[ax,ay] == 1)
+                    {
+
+                    }
+                }
+            }
+            if(aa == 4 && hi == 0) // If none of the positions hit reset process at different
+                                   // position.
+            {
+                aa = 0;
+            }
+            
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -793,6 +901,11 @@ namespace Battleship
             GetAttackGrid(attackgrid);
             GetGrid(grid);
             AIshipsDebug();
+            btnAttack.Visible = false;
+            txtAttack.Visible = false;
+            label2.Visible = false;
+            lblDebug.Visible = false;
+            this.Size = new Size(483, 445);
         }
         private void btnSet_Click(object sender, EventArgs e)
         {
@@ -830,6 +943,9 @@ namespace Battleship
                 }
                 else
                 {
+                    btnAttack.Visible = true;
+                    txtAttack.Visible = true;
+                    label2.Visible = true;
                     lblShips.Text = "You are out of ships.";
                 }
             }
@@ -863,6 +979,7 @@ namespace Battleship
             else
             {
                 Attack();
+                
             }
         }
         private void btnReset_Click(object sender, EventArgs e)
@@ -871,16 +988,14 @@ namespace Battleship
             ns2 = 4;
             accu = 1;
             lblShips.Text = "Battleship - 1 left";
-            lblGrid.Text = "";
-            int[,] grid =     {{ 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0},
-                               { 0, 0, 0, 0, 0, 0, 0, 0}, };
+            btnAttack.Visible = false;
+            txtAttack.Visible = false;
+            label2.Visible = false;
+            ResetGrid();
             GetGrid(grid);
+            ShipGen();
+            GetAttackGrid(attackgrid);
+            AIshipsDebug();
             txtXY.Text = "";
         }
     }

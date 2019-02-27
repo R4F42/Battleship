@@ -45,6 +45,7 @@
             this.lblAttack = new System.Windows.Forms.Label();
             this.lblDebug = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnDebug = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblGrid
@@ -199,12 +200,23 @@
             this.label5.Text = "AI Debug";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnDebug
+            // 
+            this.btnDebug.Location = new System.Drawing.Point(369, 270);
+            this.btnDebug.Name = "btnDebug";
+            this.btnDebug.Size = new System.Drawing.Size(75, 23);
+            this.btnDebug.TabIndex = 121;
+            this.btnDebug.Text = "Debug";
+            this.btnDebug.UseVisualStyleBackColor = true;
+            this.btnDebug.Click += new System.EventHandler(this.btnDebug_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(697, 406);
+            this.Controls.Add(this.btnDebug);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label30);
             this.Controls.Add(this.label29);
@@ -251,6 +263,7 @@
         private System.Windows.Forms.Label lblAttack;
         private System.Windows.Forms.Label lblDebug;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btnDebug;
     }
 }
 
