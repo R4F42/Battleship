@@ -12,7 +12,7 @@ namespace Battleship
 {
     public partial class Form1 : Form
     {
-        public int ax, ay, hi, dir, right, left, up, down, db = 0;
+        public int db = 0;
         public int[,] grid = { {0, 0, 0, 0, 0, 0, 0, 0},
                                {0, 0, 0, 0, 0, 0, 0, 0},
                                {0, 0, 0, 0, 0, 0, 0, 0},
@@ -148,6 +148,8 @@ namespace Battleship
             {
                 this.Size = new Size(713, 445);
                 lblDebug.Visible = true;
+                txtAttack.Visible = true;
+                btnAttack.Visible = true;
                 db++;
             }
             else
@@ -838,62 +840,46 @@ namespace Battleship
         private void AIattack()
         {
             Random rand = new Random();
-            int aa = 0;
-            if (aa == 0) // Randomize a position and attack
+            int ax = 0, ay = 0, at = 0, hi = 0, aa = 0;
+            int dir = 0, r = 0, l = 0, d = 0, u = 0;
+            if(aa == 0)
             {
                 ax = rand.Next(8);
                 ay = rand.Next(8);
                 if(grid[ax,ay] == 1)
                 {
-                    hi++;
                     grid[ax, ay] = 3;
-                    GetGrid(grid);
                 }
                 else
                 {
                     grid[ax, ay] = 2;
-                    GetGrid(grid);
+                }
+                if(ax > 0 && ay > 0)
+                {
+                    at = 0;
+                }
+                else if(ax > 0 && ay == 0)
+                {
+                    at = 1;
+                }
+                else if(ax == 0 && ay == 0)
+                {
+                    at = 2;
                 }
                 aa++;
             }
-            else if(ax > 0 && ay > 0)       // If you can go in all directions from this point
+            if (aa == 1 && at == 0 && hi == 0)
             {
-                 if(dir == 0 & right == 0)  // If you are going right and right hasn't
-                                            // attempted to hit anything.
+                if(dir == 0 && r == 0)
                 {
-                    ay--;                   // Goes right from the randomized point.
-                    if (grid[ax, ay] == 1)
-                    {
-                        hi++;               // hit indicator
-                        grid[ax, ay] = 3;   
-                        GetGrid(grid);
-                        right++;            // Right hit something
-                    }
-                    else
-                    {
-                        right--;            // Right didn't hit something
-                        ay++;               // Returns to original position
-                    }
-                }
-                aa++;
-            }
-            if(hi > 0 && ax > 0 && ay > 0)        // If you hit something
-            {
-                if(right > 0) // If you hit something going right
-                {
-                    ay--;
                     if(grid[ax,ay] == 1)
                     {
+                        r++;
+                        grid[ax, ay] = 3;
 
                     }
                 }
             }
-            if(aa == 4 && hi == 0) // If none of the positions hit reset process at different
-                                   // position.
-            {
-                aa = 0;
-            }
-            
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -946,6 +932,8 @@ namespace Battleship
                     btnAttack.Visible = true;
                     txtAttack.Visible = true;
                     label2.Visible = true;
+                    txtXY.Visible = false;
+                    btnSet.Visible = false;
                     lblShips.Text = "You are out of ships.";
                 }
             }
@@ -991,6 +979,8 @@ namespace Battleship
             btnAttack.Visible = false;
             txtAttack.Visible = false;
             label2.Visible = false;
+            txtXY.Visible = true;
+            btnSet.Visible = true;
             ResetGrid();
             GetGrid(grid);
             ShipGen();
