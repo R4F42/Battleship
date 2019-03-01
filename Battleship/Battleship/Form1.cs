@@ -12,7 +12,12 @@ namespace Battleship
 {
     public partial class Form1 : Form
     {
+        public Form1()
+        {
+            InitializeComponent();
+        }
         public int db = 0;
+        public int aia = 0, ax = 0, ay = 0, at = 0, hi = 0, r = 0, l = 0, d = 0, u = 0, dir = 0, oy = 0, ox = 0, px = 0, py = 0;
         public int[,] grid = { {0, 0, 0, 0, 0, 0, 0, 0},
                                {0, 0, 0, 0, 0, 0, 0, 0},
                                {0, 0, 0, 0, 0, 0, 0, 0},
@@ -41,10 +46,6 @@ namespace Battleship
         public int[] attackpos = new int[2];
         public int accu = 1;
         public int ns = 3, ns2 = 4;
-        public Form1()
-        {
-            InitializeComponent();
-        }
         private void ResetGrid()
         {
             
@@ -840,46 +841,484 @@ namespace Battleship
         private void AIattack()
         {
             Random rand = new Random();
-            int ax = 0, ay = 0, at = 0, hi = 0, aa = 0;
-            int dir = 0, r = 0, l = 0, d = 0, u = 0;
-            if(aa == 0)
+            if(aia == 0)
             {
                 ax = rand.Next(8);
                 ay = rand.Next(8);
+                ox = ax;
+                oy = ay;
                 if(grid[ax,ay] == 1)
                 {
                     grid[ax, ay] = 3;
+                    GetGrid(grid);
+                }
+                else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                {
+                    dir = 4;
                 }
                 else
                 {
                     grid[ax, ay] = 2;
+                    GetGrid(grid);
                 }
-                if(ax > 0 && ay > 0)
+                
+                if (ax == 0 && ay == 0)
                 {
                     at = 0;
-                }
-                else if(ax > 0 && ay == 0)
+                }           
+                else if (ax == 7 && ay == 7)
                 {
                     at = 1;
-                }
-                else if(ax == 0 && ay == 0)
+                }      
+                else if (ax == 0 && ay == 7)
                 {
                     at = 2;
-                }
-                aa++;
-            }
-            if (aa == 1 && at == 0 && hi == 0)
-            {
-                if(dir == 0 && r == 0)
+                }      
+                else if (ax == 7 && ay == 0)
                 {
-                    if(grid[ax,ay] == 1)
-                    {
-                        r++;
-                        grid[ax, ay] = 3;
+                    at = 3;
+                }      
+                else if (ax == 0 && ay > 0)
+                {
+                    at = 4;
+                }        
+                else if (ay == 0 && ax > 0)
+                {
+                    at = 5;
+                }        
+                else if(ay == 7 && ax > 0)
+                {
+                    at = 6;
+                }         
+                else if(ax == 7 && ay > 0)
+                {
+                    at = 7;
+                }         
+                else if(ax > 0 && ay > 0)
+                {
+                    at = 8;
+                }
+                dir--;                                      
+            }
+            if(at >= 0 && at < 4 && aia > 0) // 4 corners 2 directions
+            {
+                dir = 4;
+            }
+            if(at >= 4 && at < 8 && aia > 0) // 4 sides 3 directions
+            {
+                if(at == 4 || at == 7)
+                {
 
+                    if (dir == 0)
+                    {
+                        ay++;
+                        if (grid[ax, ay] == 1)
+                        {
+                            grid[ax, ay] = 3;
+                            GetGrid(grid);
+                            r++;
+                            hi++;
+
+                        }
+                        else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                        {
+                            dir = 4;
+                        }
+                        else
+                        {
+                            grid[ax, ay] = 2;
+                            GetGrid(grid);
+
+                            ay--;
+                        }
+                        
+                    }
+                    if (dir == 1)
+                    {
+                        ay--;
+                        if (grid[ax, ay] == 1)
+                        {
+                            grid[ax, ay] = 3;
+                            GetGrid(grid);
+                            l++;
+                            hi++;
+
+                        }
+                        else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                        {
+                            dir = 4;
+                        }
+                        else
+                        {
+                            grid[ax, ay] = 2;
+                            GetGrid(grid);
+
+                            ay++;
+                        }
+                    }
+                    if(at == 7)
+                    {
+                        if (dir == 2)
+                        {
+                            ax++;
+                            if (grid[ax, ay] == 1)
+                            {
+                                grid[ax, ay] = 3;
+                                GetGrid(grid);
+                                u++;
+                                hi++;
+
+                            }
+                            else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                            {
+                                dir = 4;
+                            }
+                            else
+                            {
+                                grid[ax, ay] = 2;
+                                GetGrid(grid);
+
+                                ax--;
+                            }
+                        }
+                    }
+                    else if(at == 4)
+                    {
+                        if (dir == 2)
+                        {
+                            ax++;
+                            if (grid[ax, ay] == 1)
+                            {
+                                grid[ax, ay] = 3;
+                                GetGrid(grid);
+                                u++;
+                                hi++;
+
+                            }
+                            else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                            {
+                                dir = 4;
+                            }
+                            else
+                            {
+                                grid[ax, ay] = 2;
+                                GetGrid(grid);
+
+                                ax--;
+                            }
+                        }
+                    }
+                }
+                else if(at == 5 || at == 6)
+                {
+                    if (dir == 0)
+                    {
+                        ax++;
+                        if (grid[ax, ay] == 1)
+                        {
+                            grid[ax, ay] = 3;
+                            GetGrid(grid);
+                            u++;
+                            hi++;
+
+                        }
+                        else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                        {
+                            dir = 4;
+                        }
+                        else
+                        {
+                            grid[ax, ay] = 2;
+                            GetGrid(grid);
+
+                            ax--;
+                        }
+                    }
+                    if (dir == 1)
+                    {
+                        ax--;
+                        if (grid[ax, ay] == 1)
+                        {
+                            grid[ax, ay] = 3;
+                            GetGrid(grid);
+                            d++;
+                            hi++;
+
+                        }
+                        else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                        {
+                            dir = 4;
+                        }
+                        else
+                        {
+                            grid[ax, ay] = 2;
+                            GetGrid(grid);
+
+                            ax++;
+                        }
+                    }
+                    if(at == 5)
+                    {
+                        if (dir == 2)
+                        {
+                            ay++;
+                            if (grid[ax, ay] == 1)
+                            {
+                                grid[ax, ay] = 3;
+                                GetGrid(grid);
+                                r++;
+                                hi++;
+
+                            }
+                            else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                            {
+                                dir = 4;
+                            }
+                            else
+                            {
+                                grid[ax, ay] = 2;
+                                GetGrid(grid);
+
+                                ay--;
+                            }
+
+                        }
+                    }
+                    else if(at == 6)
+                    {
+                        if (dir == 2)
+                        {
+                            ay--;
+                            if (grid[ax, ay] == 1)
+                            {
+                                grid[ax, ay] = 3;
+                                GetGrid(grid);
+                                l++;
+                                hi++;
+
+                            }
+                            else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                            {
+                                dir = 4;
+                            }
+                            else
+                            {
+                                grid[ax, ay] = 2;
+                                GetGrid(grid);
+
+                                ay++;
+                            }
+                        }
                     }
                 }
             }
+            if(at == 8 && aia > 0) // inner area 4 directions
+            {
+                if(dir == 0)
+                {
+                    ay++;
+                    if(grid[ax,ay] == 1)
+                    {
+                        grid[ax, ay] = 3;
+                        GetGrid(grid);
+                        r++;
+                        hi++;
+                        
+                    }
+                    else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                    {
+                        dir = 4;
+                    }
+                    else
+                    {
+                        grid[ax, ay] = 2;
+                        GetGrid(grid);
+                        
+                        ay--;
+                    }
+                }
+                if (dir == 1)
+                {
+                    ay--;
+                    if (grid[ax, ay] == 1)
+                    {
+                        grid[ax, ay] = 3;
+                        GetGrid(grid);
+                        l++;
+                        hi++;
+                        
+                    }
+                    else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                    {
+                        dir = 4;
+                    }
+                    else
+                    {
+                        grid[ax, ay] = 2;
+                        GetGrid(grid);
+                        
+                        ay++;
+                    }
+                }
+                if (dir == 2)
+                {
+                    ax++;
+                    if (grid[ax, ay] == 1)
+                    {
+                        grid[ax, ay] = 3;
+                        GetGrid(grid);
+                        u++;
+                        hi++;
+                        
+                    }
+                    else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                    {
+                        dir = 4;
+                    }
+                    else
+                    {
+                        grid[ax, ay] = 2;
+                        GetGrid(grid);
+                        
+                        ax--;
+                    }
+                }
+                if (dir == 3)
+                {
+                    ax--;
+                    if (grid[ax, ay] == 1)
+                    {
+                        grid[ax, ay] = 3;
+                        GetGrid(grid);
+                        d++;
+                        hi++;
+                        
+                    }
+                    else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                    {
+                        dir = 4;
+                    }
+                    else
+                    {
+                        grid[ax, ay] = 2;
+                        GetGrid(grid);
+                        
+                        ax++;
+                    }
+                }
+            }
+
+            if(hi > 0)
+            {
+                if (r > 0)
+                {
+                    ay++;
+                    if(grid[ax,ay] == 1)
+                    {
+                        grid[ax, ay] = 3;
+                        GetGrid(grid);
+                        dir--;
+                    }
+                    else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                    {
+                        dir = 4;
+                    }
+                    else
+                    {
+                        grid[ax, ay] = 2;
+                        GetGrid(grid);
+                        r = 0;
+                        hi = 0;
+                        dir--;
+                        ay = oy;
+                        ax = ox;
+                    }
+                }
+                if (l > 0)
+                {
+                    ay--;
+                    if (grid[ax, ay] == 1)
+                    {
+                        grid[ax, ay] = 3;
+                        GetGrid(grid);
+                        dir--;
+                    }
+                    else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                    {
+                        dir = 4;
+                    }
+                    else
+                    {
+                        grid[ax, ay] = 2;
+                        GetGrid(grid);
+                        l = 0;
+                        hi = 0;
+                        dir--;
+                        ay = oy;
+                        ax = ox;
+                    }
+                }
+                if (u > 0)
+                {
+                    ax++;
+                    if (grid[ax, ay] == 1)
+                    {
+                        grid[ax, ay] = 3;
+                        GetGrid(grid);
+                        dir--;
+                    }
+                    else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                    {
+                        dir = 4;
+                    }
+                    else
+                    {
+                        grid[ax, ay] = 2;
+                        GetGrid(grid);
+                        u = 0;
+                        hi = 0;
+                        dir--;
+                        ay = oy;
+                        ax = ox;
+                    }
+                }
+                if (d > 0)
+                {
+                    ax--;
+                    if (grid[ax, ay] == 1)
+                    {
+                        grid[ax, ay] = 3;
+                        GetGrid(grid);
+                        dir--;
+                    }
+                    else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
+                    {
+                        dir = 4;
+                    }
+                    else
+                    {
+                        grid[ax, ay] = 2;
+                        GetGrid(grid);
+                        d = 0;
+                        hi = 0;
+                        dir--;
+                        ay = oy;
+                        ax = ox;
+                    }
+                }
+            }
+
+            if(dir >= 3)
+            {
+                aia = 0;
+                dir = 0;
+            }
+            else
+            {
+                aia++;
+                dir++;
+            }
+            
         }
         private void Form1_Load(object sender, EventArgs e)
         {
