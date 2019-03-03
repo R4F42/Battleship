@@ -840,6 +840,7 @@ namespace Battleship
         }
         private void AIattack()
         {
+            
             Random rand = new Random();
             if(aia == 0)
             {
@@ -847,14 +848,15 @@ namespace Battleship
                 ay = rand.Next(8);
                 ox = ax;
                 oy = ay;
-                if(grid[ax,ay] == 1)
+                while (grid[ax, ay] == 2 || grid[ax, ay] == 3)
+                {
+                    ax = rand.Next(8);
+                    ay = rand.Next(8);
+                }
+                if (grid[ax,ay] == 1)
                 {
                     grid[ax, ay] = 3;
                     GetGrid(grid);
-                }
-                else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
-                {
-                    dir = 4;
                 }
                 else
                 {
@@ -898,10 +900,26 @@ namespace Battleship
                 {
                     at = 8;
                 }
-                dir--;                                      
+                dir--;
+                
             }
-            if(at >= 0 && at < 4 && aia > 0) // 4 corners 2 directions
+            if(at >= 0 && at < 4 && aia > 0) // 4 corners 2 directions not implemented for the time being
             {
+                if(grid[ax,ay] == 1)
+                {
+                    grid[ax, ay] = 3;
+                }
+                else if(grid[ax,ay] == 0)
+                {
+                    grid[ax, ay] = 2;
+                }
+                else
+                {
+                    aia = 0;
+                    dir = 0;
+                    AIattack();
+                }
+                
                 dir = 4;
             }
             if(at >= 4 && at < 8 && aia > 0) // 4 sides 3 directions
@@ -922,7 +940,9 @@ namespace Battleship
                         }
                         else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
                         {
-                            dir = 4;
+                            aia = 0;
+                            dir = 0;
+                            AIattack();
                         }
                         else
                         {
@@ -960,26 +980,25 @@ namespace Battleship
                     {
                         if (dir == 2)
                         {
-                            ax++;
+                            ax--;
                             if (grid[ax, ay] == 1)
                             {
                                 grid[ax, ay] = 3;
                                 GetGrid(grid);
                                 u++;
                                 hi++;
+                                
 
                             }
-                            else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
-                            {
-                                dir = 4;
-                            }
+                            
                             else
                             {
                                 grid[ax, ay] = 2;
                                 GetGrid(grid);
 
-                                ax--;
+                                ax++;
                             }
+                            dir = 4;
                         }
                     }
                     else if(at == 4)
@@ -995,10 +1014,7 @@ namespace Battleship
                                 hi++;
 
                             }
-                            else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
-                            {
-                                dir = 4;
-                            }
+                            
                             else
                             {
                                 grid[ax, ay] = 2;
@@ -1007,6 +1023,7 @@ namespace Battleship
                                 ax--;
                             }
                         }
+                        dir = 4;
                     }
                 }
                 else if(at == 5 || at == 6)
@@ -1024,7 +1041,9 @@ namespace Battleship
                         }
                         else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
                         {
-                            dir = 4;
+                            aia = 0;
+                            dir = 0;
+                            AIattack();
                         }
                         else
                         {
@@ -1070,10 +1089,7 @@ namespace Battleship
                                 hi++;
 
                             }
-                            else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
-                            {
-                                dir = 4;
-                            }
+                            
                             else
                             {
                                 grid[ax, ay] = 2;
@@ -1081,8 +1097,9 @@ namespace Battleship
 
                                 ay--;
                             }
-
+                            dir = 4;
                         }
+                        
                     }
                     else if(at == 6)
                     {
@@ -1097,10 +1114,7 @@ namespace Battleship
                                 hi++;
 
                             }
-                            else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
-                            {
-                                dir = 4;
-                            }
+                            
                             else
                             {
                                 grid[ax, ay] = 2;
@@ -1108,9 +1122,12 @@ namespace Battleship
 
                                 ay++;
                             }
+                            dir = 4;
                         }
+                        
                     }
                 }
+                
             }
             if(at == 8 && aia > 0) // inner area 4 directions
             {
@@ -1127,7 +1144,9 @@ namespace Battleship
                     }
                     else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
                     {
-                        dir = 4;
+                        aia = 0;
+                        dir = 0;
+                        AIattack();
                     }
                     else
                     {
@@ -1206,6 +1225,7 @@ namespace Battleship
                         ax++;
                     }
                 }
+                
             }
 
             if(hi > 0)
@@ -1307,11 +1327,12 @@ namespace Battleship
                     }
                 }
             }
-
+            
             if(dir >= 3)
             {
                 aia = 0;
                 dir = 0;
+                
             }
             else
             {
