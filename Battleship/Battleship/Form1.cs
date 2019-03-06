@@ -903,7 +903,7 @@ namespace Battleship
                 dir--;
                 
             }
-            if(at >= 0 && at < 4 && aia > 0) // 4 corners 2 directions not implemented for the time being
+            if(at >= 0 && at < 4 && aia > 0 && hi == 0) // 4 corners 2 directions not implemented for the time being
             {
                 if(grid[ax,ay] == 1)
                 {
@@ -922,7 +922,7 @@ namespace Battleship
                 
                 dir = 4;
             }
-            if(at >= 4 && at < 8 && aia > 0) // 4 sides 3 directions
+            if(at >= 4 && at < 8 && aia > 0 && hi == 0) // 4 sides 3 directions
             {
                 if(at == 4 || at == 7)
                 {
@@ -1129,7 +1129,7 @@ namespace Battleship
                 }
                 
             }
-            if(at == 8 && aia > 0) // inner area 4 directions
+            if(at == 8 && aia > 0 && hi == 0) // inner area 4 directions
             {
                 if(dir == 0)
                 {
@@ -1243,15 +1243,19 @@ namespace Battleship
                     {
                         dir = 4;
                     }
-                    else
+                    else if(grid[ax,ay] != 1 && ay < 8)
                     {
                         grid[ax, ay] = 2;
                         GetGrid(grid);
                         r = 0;
                         hi = 0;
-                        dir--;
                         ay = oy;
                         ax = ox;
+                    }
+                    else if(ay > 7)
+                    {
+                        dir++;
+                        AIattack();
                     }
                 }
                 if (l > 0)
@@ -1267,15 +1271,20 @@ namespace Battleship
                     {
                         dir = 4;
                     }
-                    else
+                    else if (grid[ax, ay] != 1 && ay >= 0)
                     {
                         grid[ax, ay] = 2;
                         GetGrid(grid);
                         l = 0;
                         hi = 0;
-                        dir--;
+                        
                         ay = oy;
                         ax = ox;
+                    }
+                    else if (ay < 0)
+                    {
+                        dir++;
+                        AIattack();
                     }
                 }
                 if (u > 0)
@@ -1291,15 +1300,20 @@ namespace Battleship
                     {
                         dir = 4;
                     }
-                    else
+                    else if(grid[ax,ay] != 1 && ax <= 7)
                     {
                         grid[ax, ay] = 2;
                         GetGrid(grid);
                         u = 0;
                         hi = 0;
-                        dir--;
+                        
                         ay = oy;
                         ax = ox;
+                    }
+                    else if (ax > 7)
+                    {
+                        dir++;
+                        AIattack();
                     }
                 }
                 if (d > 0)
@@ -1321,13 +1335,12 @@ namespace Battleship
                         GetGrid(grid);
                         d = 0;
                         hi = 0;
-                        dir--;
+                        
                         ay = oy;
                         ax = ox;
                     }
                 }
             }
-            
             if(dir >= 3)
             {
                 aia = 0;
@@ -1339,7 +1352,6 @@ namespace Battleship
                 aia++;
                 dir++;
             }
-            
         }
         private void Form1_Load(object sender, EventArgs e)
         {
