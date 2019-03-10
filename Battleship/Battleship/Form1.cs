@@ -48,7 +48,6 @@ namespace Battleship
         public int ns = 3, ns2 = 4;
         private void ResetGrid()
         {
-            
             for(int ab = 0; ab < 8; ab++)
             {
                 for(int ac = 0; ac < 8; ac++)
@@ -880,23 +879,23 @@ namespace Battleship
                 {
                     at = 3;
                 }      
-                else if (ax == 0 && ay > 0)
+                else if (ax == 0 && ay > 0 && ay != 7)
                 {
                     at = 4;
                 }        
-                else if (ay == 0 && ax > 0)
+                else if (ay == 0 && ax > 0 && ax != 7)
                 {
                     at = 5;
                 }        
-                else if(ay == 7 && ax > 0)
+                else if(ay == 7 && ax > 0 && ax != 7)
                 {
                     at = 6;
                 }         
-                else if(ax == 7 && ay > 0)
+                else if(ax == 7 && ay > 0 && ay != 7)
                 {
                     at = 7;
                 }         
-                else if(ax > 0 && ay > 0)
+                else if(ax > 0 && ay > 0 && ax < 7 && ay < 7)
                 {
                     at = 8;
                 }
@@ -962,7 +961,6 @@ namespace Battleship
                             GetGrid(grid);
                             l++;
                             hi++;
-
                         }
                         else if (grid[ax, ay] == 3 || grid[ax, ay] == 2)
                         {
@@ -972,7 +970,6 @@ namespace Battleship
                         {
                             grid[ax, ay] = 2;
                             GetGrid(grid);
-
                             ay++;
                         }
                     }
@@ -987,15 +984,11 @@ namespace Battleship
                                 GetGrid(grid);
                                 u++;
                                 hi++;
-                                
-
                             }
-                            
                             else
                             {
                                 grid[ax, ay] = 2;
                                 GetGrid(grid);
-
                                 ax++;
                             }
                             dir = 4;
